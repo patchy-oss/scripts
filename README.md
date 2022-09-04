@@ -1,2 +1,2 @@
 # scripts
-Small scripts or programs I use
+Small scripts, programs or configs I use
