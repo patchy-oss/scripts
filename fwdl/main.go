@@ -39,6 +39,7 @@ func receiveAlbum(instanceUrl, pathToSave, id string) {
 		item := obj.(map[string]any)
 		listenUrl := item["listen_url"].(string)
 		title := item["title"].(string)
+		pos := int(item["position"].(float64))
 		uploads := item["uploads"].([]any)
 		if len(uploads) < 1 {
 			die("%v: empty uploads for %q", os.Args[0], title)
@@ -51,7 +52,7 @@ func receiveAlbum(instanceUrl, pathToSave, id string) {
 			fmt.Printf("Downloadng %v\n", title)
 			trackUrl := instanceUrl + listenUrl
 			rawBody := getWithBody(trackUrl)
-			fpath := filepath.Join(pathToSave, fmt.Sprintf("%s.%s", title, ext))
+			fpath := filepath.Join(pathToSave, fmt.Sprintf("%03d. %s.%s", pos, title, ext))
 
 			err := os.WriteFile(fpath, rawBody, 0644)
 			check(err)
