@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 if [ -z "$(ip a | grep wg0)" ]; then
         wg-quick up wg0
