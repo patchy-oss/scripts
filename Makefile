@@ -1,28 +1,36 @@
 # Makefile for installing scripts
 
-BIN_PATH := ./bin
-
-all: fwdl
+include config.mk
 
 fwdl:
 	go build -o fwdl/main fwdl/main.go
 
+all: fwdl
+
+clean:
+	rm fwdl/main
+
 install: fwdl
-	mkdir -p ${BIN_PATH}
+	mkdir -p ${PREFIX}
 	# ddmenu
-	cp ddmenu/ddmenu.sh ${BIN_PATH}/ddmenu
-	chmod u+x ${BIN_PATH}/ddmenu
+	cp ddmenu/ddmenu.sh ${PREFIX}/ddmenu
+	chmod u+x ${PREFIX}/ddmenu
 	# i3exit
-	cp i3exit/i3exit.sh ${BIN_PATH}/i3exit
-	chmod u+x ${BIN_PATH}/i3exit
+	cp i3exit/i3exit.sh ${PREFIX}/i3exit
+	chmod u+x ${PREFIX}/i3exit
 	# mkplaylist
-	cp mkplaylist/mkplaylist.sh ${BIN_PATH}/mkplaylist
-	chmod u+x ${BIN_PATH}/mkplaylist
+	cp mkplaylist/mkplaylist.sh ${PREFIX}/mkplaylist
+	chmod u+x ${PREFIX}/mkplaylist
 	# scrotclip
-	cp scrotclip/scrotclip.sh ${BIN_PATH}/scrotclip
-	chmod u+x ${BIN_PATH}/scrotclip
+	cp scrotclip/scrotclip.sh ${PREFIX}/scrotclip
+	chmod u+x ${PREFIX}/scrotclip
 	# wg-toggle
-	cp wg-toggle/wg-toggle.sh ${BIN_PATH}/wg-toggle
-	chmod u+x ${BIN_PATH}/wg-toggle
+	cp wg-toggle/wg-toggle.sh ${PREFIX}/wg-toggle
+	chmod u+x ${PREFIX}/wg-toggle
 	# fwdl
-	cp fwdl/main ${BIN_PATH}/fwdl
+	cp fwdl/main ${PREFIX}/fwdl
+
+uninstall:
+	rm -rf ${PREFIX}
+
+.PHONY: fwdl all clean install uninstall
