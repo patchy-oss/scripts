@@ -1,0 +1,43 @@
+#!/bin/bash
+
+MUSIC_FOLDER="$HOME"
+
+case "$1" in
+    play)
+        to_play=$(ddmenu "$MUSIC_FOLDER")
+        if [[ $? -ne 1 ]]; then
+            mpv-mp play $to_play
+        fi
+        ;;
+    pause)
+        mpv-mp pause
+        ;;
+    add)
+        to_add=$(ddmenu "$MUSIC_FOLDER")
+        mpv-mp add $to_add
+        ;;
+    playlist)
+        plst=$(mpv-mp playlist | sed 's/\t/  /g')
+        selected=$(echo -n "$plst" | dmenu -l 20)
+        lnr=$(echo -n "$plst" | awk "/$selected/{print FNR}")
+        mpv-mp playlist $(($lnr-1))
+        ;;
+    next)
+        mpv-mp next
+        ;;
+    prev)
+        mpv-mp prev
+        ;;
+    loop)
+        mpv-mp loop
+        ;;
+    kill)
+        mpv-mp kill
+        ;;
+    *)
+        echo "Usage: $0 [play|pause|add|playlist|next|prev|loop|kill]"
+        exit 2
+esac
+
+exit 0
+
